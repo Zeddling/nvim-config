@@ -30,8 +30,12 @@ let g:LanguageClient_serverCommands = {
 \ }
 
 Plug 'rust-lang/rust.vim',         { 'for': 'rust' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
+
+" Basic window configs
+set number
 
 " ALE
 set omnifunc=ale#completion#OmniFunc
@@ -39,8 +43,11 @@ let g:ale_completion_enabled = 1
 let g:ale_completion_autoimport = 1
 let g:ale_sign_column_always = 1
 let g:ale_fix_on_save = 1
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = ''
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
+
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],'rust': ['rustfmt'],}
 inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 nmap <silent> <F12> :ALEGoToDefinition<CR>
@@ -158,3 +165,30 @@ autocmd FileType rust nmap <silent> gr <Plug>(lcn-rename)
 " Configure Rust formatter https://github.com/rust-lang/rust.vim#formatting-with-rustfmt
 " autocmd Filetype rust nnoremap == :RustFmt<CR>
 let g:rustfmt_autosave = 1
+
+" ============================ Go =================================
+" Identation
+au FileType go set noexpandtab
+au FileType go set shiftwidth=4
+au FileType go set softtabstop=4
+au FileType go set tabstop=4
+
+" Syntax highlight
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_auto_sameids = 1
+
+" Auto import dependencies
+let g:go_fmt_command = "goimports"
+
+" Show type information in status line
+let g:go_auto_type_info = 1
+
+" Adding JSON tags to structs
+let g:go_addtags_transform = "snakecase"
